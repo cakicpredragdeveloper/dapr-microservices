@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CameraSimulation", "DotNetServices\CameraSimulation.csproj", "{45532E05-95B2-4C4C-AC01-4E5BF075BA74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraDataCalculation", "CameraDataCalculation\CameraDataCalculation.csproj", "{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45532E05-95B2-4C4C-AC01-4E5BF075BA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45532E05-95B2-4C4C-AC01-4E5BF075BA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45532E05-95B2-4C4C-AC01-4E5BF075BA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45532E05-95B2-4C4C-AC01-4E5BF075BA74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F22089CA-446A-47CA-ABB7-F7925710A439}
+	EndGlobalSection
+EndGlobal
