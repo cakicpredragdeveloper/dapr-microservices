@@ -7,11 +7,11 @@ spec:
   type: bindings.mqtt
   version: v1
   metadata:
-  - name: url
-    value: mqtt://localhost:1883
-  - name: topic
-    value: demo-camera-simulation
-  - name: consumerID
-    value: "{uuid}"
+    - name: url
+      value: mqtt://localhost:1883
+    - name: topic
+      value: demo-camera-simulation
+    - name: consumerID
+      value: "{uuid}"
 scopes:
   - cameradatacalculationservice

@@ -374,3 +374,8 @@ healthchecksdb
 
 # ICO
 *.ico
+
+idea/
+.env
+dist/
+build/

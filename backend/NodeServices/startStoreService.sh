@@ -1,0 +1,1 @@
+cd EmployeeStoreService && dapr run --app-id employeestoreservice --app-port 9080 --dapr-http-port 3500 --components-path ../../../dapr/components -- npm start

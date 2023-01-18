@@ -7,13 +7,13 @@ spec:
   type: state.redis
   version: v1
   metadata:
-  - name: redisHost
-    value: localhost:6379
-  - name: redisPassword
-    secretKeyRef:
-      name: state.redisPassword
-      key: state.redisPassword
-  - name: actorStateStore
-    value: "true"
+    - name: redisHost
+      value: localhost:6379
+    - name: redisPassword
+      secretKeyRef:
+        name: state.redisPassword
+        key: state.redisPassword
+    - name: actorStateStore
+      value: "true"
 scopes:
   - cameradatacalculationservice
