@@ -29,7 +29,7 @@ export default abstract class HttpServer {
 
     this.router(app);
 
-    app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+    app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
       const { errorCode, message, status } = this.handleError(err);
       res.status(status).json({ message, errorCode });
     });

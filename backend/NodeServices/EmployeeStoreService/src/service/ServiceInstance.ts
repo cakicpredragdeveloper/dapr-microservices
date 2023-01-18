@@ -1,7 +1,6 @@
 import { DatabaseConfig } from "@app/config/types";
 import { DaprClient } from "@dapr/dapr";
 import Service, { LogModel } from "./Service";
-import ServiceError from "./ServiceError";
 import { Response } from "express";
 
 export default class ServiceInstance implements Service {
@@ -16,40 +15,39 @@ export default class ServiceInstance implements Service {
   }
 
   async insertWorkingHours(employees: LogModel[], res: Response): Promise<string> {
-    const date = new Date();
-    date.setMilliseconds(0);
-    date.setSeconds(0);
-    date.setMinutes(0);
-    date.setHours(0);
+    try {
+      const date = new Date();
+      date.setMilliseconds(0);
+      date.setSeconds(0);
+      date.setMinutes(0);
+      date.setHours(1);
 
-    // let query = "";
-    // employees.forEach((employee, ind) => {
-    //   query += ind > 0 ? "," : "";
+      await this.createTableIfNotExist();
 
-    //   query += `('${employee.WorkingTime}', ${date}, ${new Date(employee.EntryTimestamp)}, ${new Date(
-    //     employee.ExitTimestamp
-    //   )}, '${employee.EmployeeId}')`;
+      let query = ``;
+      employees.forEach((employee, ind) => {
+        if (ind > 0) query += ",";
 
-    //   query += ind === employees.length - 1 ? ";" : "";
-    // });
+        query += `('${employee.WorkingTime}', '${date.toISOString()}', '${new Date(
+          employee.EntryTimestamp
+        ).toISOString()}', '${new Date(employee.ExitTimestamp).toISOString()}', '${employee.EmployeeId}')`;
+      });
 
-    // console.log(query);
-
-    await employees.forEach(async (employee) => {
-      const sqlTableCmd = `CREATE TABLE Logs ( Id int NOT NULL, WorkingTime varchar(255), OnDay date, EntryTimestamp date, ExitTimestamp date, EmployeeId varchar(255) NOT NULL, PRIMARY KEY (Id), FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ); `;
-
-      const value = `'${employee.WorkingTime}', ${date}, ${new Date(employee.EntryTimestamp)}, ${new Date(
-        employee.ExitTimestamp
-      )}, '${employee.EmployeeId}'`;
-
-      const sqlCmd = `INSERT INTO ${this.table} (WorkingTime, OnDay, EntryTimestamp, ExitTimestamp, EmployeeId) values (${value});`;
-      const tablePayload = `{"sql": "${sqlTableCmd}"} `;
+      const sqlCmd = `INSERT INTO ${this.table} (WorkingTime, OnDay, EntryTimestamp, ExitTimestamp, EmployeeId) values ${query};`;
       const payload = `{"sql": "${sqlCmd}"} `;
 
-      await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(tablePayload));
       await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(payload));
-    });
 
-    return "OK";
+      return "OK";
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  }
+
+  private async createTableIfNotExist() {
+    const sqlTableCmd = `CREATE TABLE IF NOT EXISTS ${this.table} ( Id SERIAL NOT NULL, WorkingTime varchar(255), OnDay date, EntryTimestamp date, ExitTimestamp date, EmployeeId varchar(255) NOT NULL, PRIMARY KEY (Id), FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ); `;
+    const tableSQL = `{"sql": "${sqlTableCmd}"} `;
+
+    await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(tableSQL));
   }
 }

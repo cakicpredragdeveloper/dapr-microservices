@@ -10,7 +10,6 @@ export default class ServiceController {
       const values = req.body;
       const message = await this.service.insertWorkingHours(values, res);
 
-      console.log(message);
       if (message === "OK") {
         res.json({
           message
