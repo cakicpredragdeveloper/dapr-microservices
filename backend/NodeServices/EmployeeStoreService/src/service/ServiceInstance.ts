@@ -40,7 +40,7 @@ export default class ServiceInstance implements Service {
 
       return "OK";
     } catch (err: any) {
-      throw new Error(err.message);
+      throw new Error(`[Dapr sidecar error]: ${err.message}`);
     }
   }
 
