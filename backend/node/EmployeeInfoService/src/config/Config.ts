@@ -2,9 +2,10 @@ import BaseConfig from "./BasicConfig";
 import { ConfigData } from "./types";
 
 export default class Config extends BaseConfig {
-  private readonly ENV_PREFIX = "STORE_";
-  private readonly ENV_DATABASE_PREFIX = "DAPR_DATABASE_";
-  private readonly ENV_SECRET_PREFIX = "DAPR_SECRET_";
+  private readonly ENV_PREFIX = "INFO_";
+  private readonly ENV_DAPR_PREFIX = "DAPR_";
+  private readonly ENV_DATABASE_PREFIX = "DATABASE_";
+  private readonly ENV_SECRET_PREFIX = "SECRET_";
 
   public readonly config: ConfigData;
   constructor(env: any) {
@@ -18,23 +19,23 @@ export default class Config extends BaseConfig {
       server: {
         port: this.convertToString(this.generateKey("SERVICE_HTTP_PORT"), env[this.generateKey("SERVICE_HTTP_PORT")])
       },
-      database: {
-        id: this.convertToString(this.generateDatabaseKey("ID"), env[this.generateDatabaseKey("ID")]),
-        host: this.convertToString(this.generateDatabaseKey("HOST"), env[this.generateDatabaseKey("HOST")]),
-        port: this.convertToString(this.generateDatabaseKey("PORT"), env[this.generateDatabaseKey("PORT")]),
-        table: this.convertToString(this.generateDatabaseKey("TABLE"), env[this.generateDatabaseKey("TABLE")])
+      auth: {
+        username: this.convertToString(this.generateKey("USERNAME"), env[this.generateKey("USERNAME")]),
+        password: this.convertToString(this.generateKey("PASSWORD"), env[this.generateKey("PASSWORD")])
       },
-      secret: {
-        host: this.convertToString(this.generateSecretKey("HOST"), env[this.generateSecretKey("HOST")]),
-        port: this.convertToString(this.generateSecretKey("PORT"), env[this.generateSecretKey("PORT")]),
-        store: this.convertToString(this.generateSecretKey("STORE"), env[this.generateSecretKey("STORE")]),
-        name: this.convertToString(this.generateSecretKey("NAME"), env[this.generateSecretKey("NAME")])
+      dapr: {
+        host: this.convertToString(this.generateDaprKey("HOST"), env[this.generateDaprKey("HOST")]),
+        port: this.convertToString(this.generateDaprKey("PORT"), env[this.generateDaprKey("PORT")])
       }
     };
   }
 
   private generateKey(key: string) {
     return `${this.ENV_PREFIX}${key}`;
+  }
+
+  private generateDaprKey(key: string) {
+    return `${this.ENV_DAPR_PREFIX}${key}`;
   }
 
   private generateDatabaseKey(key: string) {

@@ -1,4 +1,4 @@
-import DatabaseService from "@app/service/database/DatabaseSevice";
+import DatabaseService from "@app/service/database/DatabaseService";
 import ServiceError from "@app/service/ServiceError";
 import { Request, Response } from "express";
 

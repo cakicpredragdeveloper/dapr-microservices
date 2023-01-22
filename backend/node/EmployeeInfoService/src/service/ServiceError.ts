@@ -3,11 +3,11 @@ export default class ServiceError extends Error {
   public readonly errorCode: string;
   public readonly status: number;
 
-  constructor(error: any) {
+  constructor(error: any, status?: number) {
     super("Unknown error service error");
     this.errorMessage = error;
     this.errorCode = "SERVER_ERROR";
-    this.status = 500;
+    this.status = status ?? 500;
     return;
   }
 }

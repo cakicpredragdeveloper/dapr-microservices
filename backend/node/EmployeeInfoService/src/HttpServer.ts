@@ -38,11 +38,12 @@ export default abstract class HttpServer {
   }
 
   protected handleError(error: Error): ErrorResponse {
-    if (error instanceof ServiceError)
+    if (error instanceof ServiceError) {
       return { message: error.errorMessage, errorCode: error.errorCode, status: error.status };
-    if (error instanceof MissingParameterError)
+    }
+    if (error instanceof MissingParameterError) {
       return { message: error.message, errorCode: "MISSING_PARAMETER", status: 400 };
-
+    }
     return {
       message: "Internal server error",
       errorCode: "SERVER_ERROR",

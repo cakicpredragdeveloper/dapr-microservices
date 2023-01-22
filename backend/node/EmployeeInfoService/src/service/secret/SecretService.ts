@@ -1,17 +1,15 @@
-import { SecretConfig } from "@app/config/types";
+import { DaprConfig } from "@app/config/types";
 import { DaprClient } from "@dapr/dapr";
 import ServiceError from "../ServiceError";
 import ISecretService, { SecretModel } from "./ISecretService";
 
 export default class SecretService implements ISecretService {
   private readonly daprClient: DaprClient;
-  private readonly store: string;
-  private readonly name: string;
+  private readonly store = "localsecretstore";
+  private readonly name = "secret";
 
-  constructor({ host, port, store, name }: SecretConfig) {
+  constructor({ host, port }: DaprConfig) {
     this.daprClient = new DaprClient(host, port);
-    this.store = store;
-    this.name = name;
   }
 
   async getSecret(): Promise<SecretModel> {

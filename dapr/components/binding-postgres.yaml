@@ -2,7 +2,7 @@ apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
   name: sqldb
-  namespace: quickstarts
+  namespace: dapr-cameradatacalculation
 spec:
   type: bindings.postgres
   version: v1

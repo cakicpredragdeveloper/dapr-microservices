@@ -5,13 +5,11 @@ import { Response } from "express";
 
 export default class ServiceInstance implements Service {
   private readonly daprClient: DaprClient;
-  private readonly store: string;
-  private readonly table: string;
+  private readonly store = "sqldb";
+  private readonly table = "logs";
 
-  constructor({ id, host, port, table }: DatabaseConfig) {
+  constructor({ host, port }: DatabaseConfig) {
     this.daprClient = new DaprClient(host, port);
-    this.store = id;
-    this.table = table;
   }
 
   async insertWorkingHours(employees: LogModel[], res: Response): Promise<string> {

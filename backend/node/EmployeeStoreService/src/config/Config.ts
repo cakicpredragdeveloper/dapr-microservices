@@ -3,8 +3,10 @@ import { ConfigData } from "./types";
 
 export default class Config extends BaseConfig {
   private readonly ENV_PREFIX = "STORE_";
+  private readonly ENV_DAPR_PREFIX = "DAPR_";
 
   public readonly config: ConfigData;
+
   constructor(env: any) {
     super();
     this.config = this.parseConfig(env);
@@ -16,10 +18,8 @@ export default class Config extends BaseConfig {
         port: this.convertToString(this.generateKey("SERVICE_HTTP_PORT"), env[this.generateKey("SERVICE_HTTP_PORT")])
       },
       database: {
-        id: this.convertToString(this.generateDaprKey("ID"), env[this.generateDaprKey("ID")]),
         host: this.convertToString(this.generateDaprKey("HOST"), env[this.generateDaprKey("HOST")]),
-        port: this.convertToString(this.generateDaprKey("PORT"), env[this.generateDaprKey("PORT")]),
-        table: this.convertToString(this.generateDaprKey("TABLE"), env[this.generateDaprKey("TABLE")])
+        port: this.convertToString(this.generateDaprKey("PORT"), env[this.generateDaprKey("PORT")])
       }
     };
   }
@@ -29,6 +29,6 @@ export default class Config extends BaseConfig {
   }
 
   private generateDaprKey(key: string) {
-    return `DAPR_DATABASE_${key}`;
+    return `${this.ENV_DAPR_PREFIX}${key}`;
   }
 }
