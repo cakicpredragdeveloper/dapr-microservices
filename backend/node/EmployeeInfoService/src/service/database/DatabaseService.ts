@@ -1,5 +1,6 @@
 import { DaprConfig } from "@app/config/types";
 import { DaprClient } from "@dapr/dapr";
+import ServiceError from "../ServiceError";
 import IDatabaseService, { EmployeeModel } from "./IDatabaseService";
 
 export default class DatabaseService implements IDatabaseService {
@@ -25,7 +26,7 @@ export default class DatabaseService implements IDatabaseService {
 
       return data;
     } catch (err: any) {
-      throw new Error(`[Database error]: ${err.message}`);
+      throw new ServiceError(`[Database error]: ${err.message}`);
     }
   }
 }
