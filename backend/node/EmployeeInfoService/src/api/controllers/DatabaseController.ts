@@ -4,14 +4,14 @@ import { Request, Response } from "express";
 import { MissingParameterError } from "./controllerErrors";
 
 export default class DatabaseController {
-  constructor(private readonly service: DatabaseService) {}
+  constructor(private readonly service: DatabaseService, private readonly secret: string) {}
 
   async getEmployees(req: Request, res: Response): Promise<void> {
     try {
       const { daprsecret } = req.headers;
 
       if (daprsecret == null) throw new MissingParameterError("daprsecret");
-      if (daprsecret === "053346ef9f77c7f9c7eb9b3e78c1b72c") {
+      if (daprsecret === this.secret) {
         const employees = await this.service.getEmployees();
 
         res.json(employees);

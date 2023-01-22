@@ -1,7 +1,16 @@
-import DependencyContainer from "./DependencyContainer";
+import DependencyContainer, { Dependency } from "./DependencyContainer";
 import HttpApi from "./HttpApi";
 
-const { config, api } = new DependencyContainer().dependency(process.env);
+let dependency: Dependency;
 
-const server = new HttpApi(config, api);
-server.start();
+(async () => {
+  dependency = await new DependencyContainer().dependency(process.env);
+})()
+  .then(() => {
+    const { config, api } = dependency;
+    const server = new HttpApi(config, api);
+    server.start();
+  })
+  .catch((err) => {
+    console.log(err);
+  });

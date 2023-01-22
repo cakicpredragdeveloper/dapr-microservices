@@ -24,17 +24,23 @@ interface Controllers {
 }
 
 export default class DependencyContainer {
-  dependency(env: any): Dependency {
-    const config = new Config(env).config;
+  async dependency(env: any): Promise<Dependency> {
+    try {
+      const config = new Config(env).config;
 
-    const services = this.load(config.dapr);
+      const services = this.load(config.dapr);
 
-    const controllers = this.controllers(services, config.auth);
+      const key = await services.secret.getSecret();
 
-    return {
-      config,
-      api: new Api(new SecretServiceRouter(controllers.secret), new DatabaseRouter(controllers.database))
-    };
+      const controllers = this.controllers(services, config.auth, key.secret);
+
+      return {
+        config,
+        api: new Api(new SecretServiceRouter(controllers.secret), new DatabaseRouter(controllers.database))
+      };
+    } catch (err) {
+      throw new Error(`Error while starting the service: ${err}`);
+    }
   }
 
   private load(config: DaprConfig): Services {
@@ -44,10 +50,10 @@ export default class DependencyContainer {
     };
   }
 
-  private controllers({ secret, database }: Services, auth: AuthConfig): Controllers {
+  private controllers({ secret, database }: Services, auth: AuthConfig, secretValue: string): Controllers {
     return {
       secret: new SecretController(secret, auth),
-      database: new DatabaseController(database)
+      database: new DatabaseController(database, secretValue)
     };
   }
 }
