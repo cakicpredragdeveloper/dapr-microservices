@@ -7,7 +7,7 @@ spec:
   type: bindings.postgres
   version: v1
   metadata:
-    - name: url # Required
+    - name: url
       value: "user=postgres password=postgres host=localhost port=5432 dbname=employees pool_min_conns=1 pool_max_conns=10"
 scopes:
   - employeestoreservice

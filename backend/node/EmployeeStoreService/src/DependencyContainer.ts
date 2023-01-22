@@ -1,4 +1,3 @@
-import { DaprClient } from "@dapr/dapr";
 import Api from "./api/Api";
 import ServiceController from "./api/controllers/ServiceController";
 import ServiceRouter from "./api/routes/ServiceRouter";
