@@ -359,10 +359,10 @@ healthchecksdb
 *.gif
 
 # Portable Network Graphics
-*.png
+# *.png
 
 # Scalable Vector Graphics
-*.svg
+# *.svg
 *.svgz
 
 # Portable Document Format

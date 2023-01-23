@@ -10,7 +10,7 @@ export default class SecretRouter extends HttpRouter {
   }
 
   router(): Router {
-    return Router().get(
+    return Router().post(
       "/",
       asyncHandler(async (req, res) => this.controller.getSecret(req, res))
     );

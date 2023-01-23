@@ -1,5 +1,3 @@
-import { Response } from "express";
-
 export type EmployeeModel = {
   EmployeeId: string;
   FirstName: string;
