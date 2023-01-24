@@ -9,3 +9,11 @@ export const sortValues = (first: string, second: string, type: string) => {
 export const searchFilter = (value: string, search: string) => value.toLocaleLowerCase().includes(search);
 
 export const checkValue = (value: string | null) => value !== null && value === "";
+
+export const mapEmployeeFields: { [key: string]: string } = {
+  EmployeeId: "ID",
+  FirstName: "First Name",
+  LastName: "Last Name",
+  Email: "E-mail",
+  JobTitle: "Job Title"
+};

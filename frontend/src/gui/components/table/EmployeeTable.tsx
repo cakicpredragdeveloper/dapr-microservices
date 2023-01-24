@@ -153,11 +153,11 @@ export default function EmployeesTable(props: EmployeesTableProps) {
 
   const row = (employee: EmployeeViewModel) => (
     <TableRow key={employee.EmployeeId} id={employee.EmployeeId}>
-      {tableCell(employee.EmployeeId, employee.EmployeeId, "17%", handleEdit)}
-      {tableCell(employee.FirstName, employee.FirstName, "17%", handleEdit)}
-      {tableCell(employee.LastName, employee.LastName, "17%", handleEdit)}
-      {tableCell(employee.Email, employee.Email, "17%", handleEdit)}
-      {tableCell(employee.JobTitle, employee.JobTitle, "17%", handleEdit)}
+      {tableCell(employee.EmployeeId, employee.EmployeeId, "30%", handleEdit)}
+      {tableCell(employee.EmployeeId, employee.FirstName, "14%", handleEdit)}
+      {tableCell(employee.EmployeeId, employee.LastName, "14%", handleEdit)}
+      {tableCell(employee.EmployeeId, employee.Email, "17%", handleEdit)}
+      {tableCell(employee.EmployeeId, employee.JobTitle, "17%", handleEdit)}
       {tableCellButtons(
         <IconButton
           disableRipple
@@ -172,7 +172,7 @@ export default function EmployeesTable(props: EmployeesTableProps) {
         >
           <Edit />
         </IconButton>,
-        "8%"
+        "4%"
       )}
     </TableRow>
   );
@@ -219,7 +219,7 @@ export default function EmployeesTable(props: EmployeesTableProps) {
     <TableContainer component={Card} sx={{ marginBottom: 2, bemployee: "1px solid #DFE0EB", bemployeeRadius: "8px" }}>
       <Table aria-label="employees-table" size="small">
         <TableHeader
-          cells={["EmployeeId", "FirstName", "LastName", "Email", "JobTitle"]}
+          cells={["EmployeeId", "FirstName", "LastName", "Email", "JobTitle", ""]}
           setSort={sorting}
           sort={sort}
         />

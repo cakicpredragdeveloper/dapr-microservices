@@ -7,7 +7,6 @@ export interface MyHttpConfig extends AxiosRequestConfig {
 
 export default class NetworkController {
   private instance: AxiosInstance;
-  private lock: boolean = false;
 
   constructor(private httpConfig: HttpData) {
     this.instance = axios.create({
@@ -31,10 +30,6 @@ export default class NetworkController {
 
   private async handleResponse(err: any) {
     if (err.response && err.response.status) {
-      if (err.response.status === 403 || err.response.status === 401) {
-        return this.request(err.response.config);
-      }
-
       if (err.response.data.message && err.response.data.errorCode) {
         return Promise.reject({
           message: err.response.data.message,

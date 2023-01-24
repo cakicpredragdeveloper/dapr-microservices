@@ -15,7 +15,7 @@ interface TableHeaderProps {
   setSort?: (event: any) => void;
 }
 
-const setCursor = (label: string): boolean => label === "Actions";
+const setCursor = (label: string): boolean => label === "";
 
 export const mapSortingOptions: { [key: string]: string } = {
   none: "none",
@@ -34,7 +34,7 @@ const cell = (label: string, latest: boolean, setSort?: (event: any) => void, so
   <TableCell
     id={`cell_${label}`}
     key={label}
-    align={label === "Employee status" ? "center" : label === "Actions" ? "right" : "left"}
+    align={label === "Employee status" ? "center" : label === "" ? "right" : "left"}
     sx={{
       fontWeight: 700,
       color: "#293330",
@@ -52,7 +52,7 @@ const cell = (label: string, latest: boolean, setSort?: (event: any) => void, so
       userSelect: "none" /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
     }}
-    onClick={latest || label === "Actions" || setSort === undefined ? () => {} : setSort}
+    onClick={latest || label === "" || setSort === undefined ? () => {} : setSort}
   >
     {!(latest || setSort === undefined || setCursor(label)) && sort !== undefined && (
       <img

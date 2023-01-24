@@ -13,11 +13,12 @@ export default class EmployeeDataSource implements IEmployeeDataSource {
   async getEmployees(): Promise<EmployeeDTO[]> {
     try {
       const employees: any = await this.nwc.request({
-        url: "/v1/database/employees",
+        url: "/database/employees",
         method: "GET",
         useToken: true
       });
-      return employees;
+
+      return employees.data;
     } catch (error: any) {
       throw new EmployeeDataSourceError(`[getEmployees] - ${error.message}`);
     }

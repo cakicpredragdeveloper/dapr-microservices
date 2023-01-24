@@ -15,11 +15,13 @@ const findIcon = (name: string, selected: boolean) => {
   let result;
   switch (name) {
     case "EMPLOYEES":
-      <Person2
-        sx={(theme) => ({
-          color: (result = selected ? theme.palette.primary.main : theme.palette.secondary.main)
-        })}
-      />;
+      result = (
+        <Person2
+          sx={(theme) => ({
+            color: selected ? theme.palette.primary.main : theme.palette.secondary.main
+          })}
+        />
+      );
       break;
 
     default:
@@ -33,7 +35,7 @@ export default function MenuItem(props: MenuItemProps) {
 
   const navigate = useNavigate();
 
-  const handleClick = (event: any) => {
+  const handleClick = () => {
     navigate(url);
   };
 
