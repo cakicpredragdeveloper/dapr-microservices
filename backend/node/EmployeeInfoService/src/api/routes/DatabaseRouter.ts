@@ -10,9 +10,14 @@ export default class DatabaseRouter extends HttpRouter {
   }
 
   router(): Router {
-    return Router().get(
-      "/employees",
-      asyncHandler(async (req, res) => this.controller.getEmployees(req, res))
-    );
+    return Router()
+      .get(
+        "/employees",
+        asyncHandler(async (req, res) => this.controller.getEmployees(req, res))
+      )
+      .get(
+        "/logs",
+        asyncHandler(async (req, res) => this.controller.getLogs(req, res))
+      );
   }
 }

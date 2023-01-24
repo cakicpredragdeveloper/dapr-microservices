@@ -3,8 +3,9 @@ import { useNavigate } from "react-router";
 import ListItem from "@mui/material/ListItem/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText/ListItemText";
-import { Person2 } from "@mui/icons-material";
+import { HistoryToggleOff, Person2 } from "@mui/icons-material";
 
+const notSelected = "#BDBDBD";
 interface MenuItemProps {
   title: string;
   url: string;
@@ -18,7 +19,16 @@ const findIcon = (name: string, selected: boolean) => {
       result = (
         <Person2
           sx={(theme) => ({
-            color: selected ? theme.palette.primary.main : theme.palette.secondary.main
+            color: selected ? theme.palette.primary.main : notSelected
+          })}
+        />
+      );
+      break;
+    case "LOGS":
+      result = (
+        <HistoryToggleOff
+          sx={(theme) => ({
+            color: selected ? theme.palette.primary.main : notSelected
           })}
         />
       );

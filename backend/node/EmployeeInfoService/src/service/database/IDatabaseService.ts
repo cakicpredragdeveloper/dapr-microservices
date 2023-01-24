@@ -8,6 +8,7 @@ export type EmployeeModel = {
 
 export type LogModel = {
   WorkingTime: string;
+  OnDay: string;
   EntryTimestamp: string;
   ExitTimestamp: string;
   EmployeeId: string;
@@ -15,4 +16,5 @@ export type LogModel = {
 
 export default interface IDatabaseService {
   getEmployees(): Promise<EmployeeModel[]>;
+  getLogs(): Promise<LogModel[]>;
 }

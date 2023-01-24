@@ -20,4 +20,19 @@ export default class DatabaseController {
       throw error;
     }
   }
+
+  async getLogs(req: Request, res: Response): Promise<void> {
+    try {
+      const { daprsecret } = req.headers;
+
+      if (daprsecret == null) throw new MissingParameterError("daprsecret");
+      if (daprsecret === this.secret) {
+        const logs = await this.service.getLogs();
+
+        res.json(logs);
+      } else throw new ServiceError("Unauthorized access: invalid secret key.", 401);
+    } catch (error: any) {
+      throw error;
+    }
+  }
 }

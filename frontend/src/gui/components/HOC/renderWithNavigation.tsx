@@ -31,7 +31,10 @@ import { SetEmployeePageNumber } from "../../redux/employeeList/EmployeeListComm
 import { SignOutAction } from "../../redux/signOut/SignOutCommands";
 import appLogo from "../../../resources/appLogo.svg";
 
-const MENU_ITEMS = [{ title: "EMPLOYEES", url: "/app/employees" }];
+const MENU_ITEMS = [
+  { title: "EMPLOYEES", url: "/app/employees" },
+  { title: "LOGS", url: "/app/logs" }
+];
 
 const isSidebarMenuItemSelected = (pathname: string, SidebarMenuItemUrl: string): boolean => {
   return SidebarMenuItemUrl === "/employees"
@@ -65,7 +68,7 @@ export default function renderWithNavigation(WrappedComponent: React.ComponentTy
 
     React.useEffect(() => {
       const paths = pathname.split("/");
-      setShowSearchBar(paths[paths.length - 1] === "employees");
+      setShowSearchBar(paths[paths.length - 1] === "employees" || paths[paths.length - 1] === "logs");
       setTitle(getTitleForPage(pathname));
     }, [pathname, setTitle]);
 

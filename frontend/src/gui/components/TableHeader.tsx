@@ -7,11 +7,12 @@ import sortDescIcon from "../../resources/sortDesc.svg";
 import sortDefIcon from "../../resources/sortDefault.svg";
 import { themeMui } from "../styles";
 import { EmployeeSort } from "./table/EmployeeTable";
+import { LogSort } from "./table/LogTable";
 
 interface TableHeaderProps {
   cells: string[];
   latest?: boolean;
-  sort?: EmployeeSort;
+  sort?: EmployeeSort | LogSort;
   setSort?: (event: any) => void;
 }
 
@@ -30,7 +31,7 @@ export const mapSortingOptions: { [key: string]: string } = {
   status: "Employee Status"
 };
 
-const cell = (label: string, latest: boolean, setSort?: (event: any) => void, sort?: EmployeeSort) => (
+const cell = (label: string, latest: boolean, setSort?: (event: any) => void, sort?: EmployeeSort | LogSort) => (
   <TableCell
     id={`cell_${label}`}
     key={label}
