@@ -11,7 +11,6 @@ import { LogSort } from "./table/LogTable";
 
 interface TableHeaderProps {
   cells: string[];
-  latest?: boolean;
   sort?: EmployeeSort | LogSort;
   setSort?: (event: any) => void;
 }
@@ -20,31 +19,31 @@ const setCursor = (label: string): boolean => label === "";
 
 export const mapSortingOptions: { [key: string]: string } = {
   none: "none",
-  firstName: "Customer",
-  email: "E-mail",
-  id: "Customer ID",
-  createdAt: "Created at",
-  employeeNumber: "Employee",
-  customerName: "Customer",
-  timestamp: "Last change",
-  offer: "Offer",
-  status: "Employee Status"
+  EmployeeId: "EmployeeId",
+  FirstName: "FirstName",
+  LastName: "LastName",
+  Email: "Email",
+  JobTitle: "JobTitle",
+  WorkingTime: "WorkingTime",
+  OnDay: "OnDay",
+  EntryTimestamp: "EntryTimestamp",
+  ExitTimestamp: "ExitTimestamp"
 };
 
-const cell = (label: string, latest: boolean, setSort?: (event: any) => void, sort?: EmployeeSort | LogSort) => (
+const cell = (label: string, setSort?: (event: any) => void, sort?: EmployeeSort | LogSort) => (
   <TableCell
     id={`cell_${label}`}
     key={label}
-    align={label === "Employee status" ? "center" : label === "" ? "right" : "left"}
+    align={label === "" ? "right" : "left"}
     sx={{
       fontWeight: 700,
       color: "#293330",
       fontSize: "14px",
       fontFamily: "Open Sans",
-      paddingTop: themeMui.spacing(latest ? 1 : 2),
-      paddingBottom: themeMui.spacing(latest ? 1 : 2),
+      paddingTop: themeMui.spacing(2),
+      paddingBottom: themeMui.spacing(2),
       paddingLeft: themeMui.spacing(0.75),
-      cursor: latest || setSort === undefined || setCursor(label) ? "default" : "pointer",
+      cursor: setCursor(label) ? "default" : "pointer",
       WebkitTouchCallout: "none" /* iOS Safari */,
       WebkitUserSelect: "none" /* Safari */,
       KhtmlUserSelect: "none" /* Konqueror HTML */,
@@ -53,9 +52,9 @@ const cell = (label: string, latest: boolean, setSort?: (event: any) => void, so
       userSelect: "none" /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
     }}
-    onClick={latest || label === "" || setSort === undefined ? () => {} : setSort}
+    onClick={label === "" || setSort === undefined ? () => {} : setSort}
   >
-    {!(latest || setSort === undefined || setCursor(label)) && sort !== undefined && (
+    {!(setSort === undefined || setCursor(label)) && sort !== undefined && (
       <img
         id={`icon_${label}`}
         src={
@@ -82,9 +81,9 @@ const cell = (label: string, latest: boolean, setSort?: (event: any) => void, so
   </TableCell>
 );
 
-const TableHeader = ({ cells, latest = false, setSort, sort }: TableHeaderProps) => (
+const TableHeader = ({ cells, setSort, sort }: TableHeaderProps) => (
   <TableHead>
-    <TableRow>{cells.map((c) => cell(c, latest, setSort, sort))}</TableRow>
+    <TableRow>{cells.map((c) => cell(c, setSort, sort))}</TableRow>
   </TableHead>
 );
 

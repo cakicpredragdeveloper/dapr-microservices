@@ -12,11 +12,9 @@ import TableFooter from "@mui/material/TableFooter/TableFooter";
 import TableRow from "@mui/material/TableRow/TableRow";
 import TablePagination from "@mui/material/TablePagination/TablePagination";
 import { themeMui } from "../../styles";
-import IconButton from "@mui/material/IconButton/IconButton";
 import { RootState } from "../../redux/store";
 import { SetLogPageNumber, SetLogPageSize } from "../../redux/logList/LogListCommands";
 import { useSearchParams } from "react-router-dom";
-import { Edit } from "@mui/icons-material";
 import TableCell from "@mui/material/TableCell/TableCell";
 
 const mapSortingOptions: { [key: string]: string } = {
@@ -67,12 +65,7 @@ export type LogSort = {
   field: "none" | LogFieldType;
 };
 
-interface LogsTableProps {
-  handleEdit: (event: any) => void;
-}
-
-export default function LogsTable(props: LogsTableProps) {
-  const { handleEdit } = props;
+export default function LogsTable() {
   const { logList, pageSize, pageNumber } = useAppSelector((state: RootState) => state.logList);
 
   const [filteredData, setFilteredData] = React.useState<LogViewModel[]>([]);
@@ -146,29 +139,13 @@ export default function LogsTable(props: LogsTableProps) {
     );
   }, [filteredData, pageNumber, pageSize]);
 
-  const row = (log: LogViewModel) => (
-    <TableRow key={log.WorkingTime} id={log.WorkingTime}>
-      {tableCell(log.EmployeeId, log.WorkingTime, "14%", handleEdit)}
-      {tableCell(log.EmployeeId, log.OnDay, "14%", handleEdit)}
-      {tableCell(log.EmployeeId, log.EntryTimestamp, "14%", handleEdit)}
-      {tableCell(log.EmployeeId, log.ExitTimestamp, "17%", handleEdit)}
-      {tableCell(log.EmployeeId, log.EmployeeId, "30%", handleEdit)}
-      {tableCellButtons(
-        <IconButton
-          disableRipple
-          id={log.EmployeeId}
-          onClick={handleEdit}
-          edge="end"
-          size="small"
-          sx={{
-            color: "#000000",
-            background: "transparent"
-          }}
-        >
-          <Edit />
-        </IconButton>,
-        "4%"
-      )}
+  const row = (log: LogViewModel, ind?: number) => (
+    <TableRow key={`${log.EmployeeId}-${ind}`} id={`${log.EmployeeId}`}>
+      {tableCell(log.EmployeeId, log.WorkingTime, "20%")}
+      {tableCell(log.EmployeeId, log.OnDay, "20%")}
+      {tableCell(log.EmployeeId, log.EntryTimestamp, "20%")}
+      {tableCell(log.EmployeeId, log.ExitTimestamp, "20%")}
+      {tableCell(log.EmployeeId, log.EmployeeId, "20%")}
     </TableRow>
   );
 
@@ -214,11 +191,11 @@ export default function LogsTable(props: LogsTableProps) {
     <TableContainer component={Card} sx={{ marginBottom: 2, blog: "1px solid #DFE0EB", blogRadius: "8px" }}>
       <Table aria-label="logs-table" size="small">
         <TableHeader
-          cells={["WorkingTime", "OnDay", "EntryTimestamp", "ExitTimestamp", "EmployeeId", ""]}
+          cells={["WorkingTime", "OnDay", "EntryTimestamp", "ExitTimestamp", "EmployeeId"]}
           setSort={sorting}
           sort={sort}
         />
-        <TableBody>{displayData.map((log) => row(log))}</TableBody>
+        <TableBody>{displayData.map((log, ind) => row(log, ind))}</TableBody>
         <TableFooter>
           <TableRow>
             <TablePagination

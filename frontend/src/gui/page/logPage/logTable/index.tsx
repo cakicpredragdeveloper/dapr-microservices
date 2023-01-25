@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
 import ErrorMessage from "../../../components/ErrorMessage";
 import { GetLogs, ResetLogListError, ResetLogListView } from "../../../redux/logList/LogListCommands";
 import { SnackClose } from "../../../redux/base/BaseCommands";
@@ -16,8 +15,6 @@ export default function Logs() {
   const { snackOpen, snackText } = useAppSelector((state: RootState) => state.base);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     dispatch(GetLogs());
@@ -37,11 +34,6 @@ export default function Logs() {
     dispatch(SnackClose());
   };
 
-  const handleEdit = (event: any) => {
-    const logNumber = event.currentTarget.id;
-    if (logNumber) navigate(`${location.pathname}/${logNumber}`);
-  };
-
   const handleCloseError = () => dispatch(ResetLogListView());
   const errorView = <ErrorMessage message={error} handleClose={handleCloseError} />;
 
@@ -49,7 +41,7 @@ export default function Logs() {
     <div>
       <Suspense fallback={<Loader />}>
         {error ? errorView : null}
-        <LogTable handleEdit={handleEdit} />
+        <LogTable />
         <Snackbar open={snackOpen} handleClose={handleSnackBarClose} message={snackText} />
       </Suspense>
     </div>
