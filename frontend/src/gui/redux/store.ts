@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { baseSlice } from "./base/BaseSlice";
+import { employeeSlice } from "./employee/EmployeeSlice";
 import { employeeListSlice } from "./employeeList/EmployeeListSlice";
 import { logListSlice } from "./logList/LogListSlice";
 import { signInSlice } from "./signIn/SignInSlice";
@@ -13,6 +14,7 @@ export const store = configureStore({
     signIn: signInSlice.reducer,
     signOut: signOutSlice.reducer,
     employeeList: employeeListSlice.reducer,
+    employee: employeeSlice.reducer,
     logList: logListSlice.reducer
   }
 });

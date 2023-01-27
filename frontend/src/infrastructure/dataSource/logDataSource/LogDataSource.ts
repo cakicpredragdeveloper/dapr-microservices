@@ -10,6 +10,20 @@ export class LogDataSourceError extends Error {
 export default class LogDataSource implements ILogDataSource {
   constructor(private nwc: NetworkController) {}
 
+  async getEmployeeLogs(employeeId: string): Promise<LogDTO[]> {
+    try {
+      const logs: any = await this.nwc.request({
+        url: `/database/logs/${employeeId}`,
+        method: "GET",
+        useToken: true
+      });
+
+      return logs.data;
+    } catch (error: any) {
+      throw new LogDataSourceError(`[getLogs] - ${error.message}`);
+    }
+  }
+
   async getLogs(): Promise<LogDTO[]> {
     try {
       const logs: any = await this.nwc.request({

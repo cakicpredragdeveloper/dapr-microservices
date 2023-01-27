@@ -8,4 +8,5 @@ export type LogDTO = {
 
 export default interface ILogDataSource {
   getLogs(): Promise<LogDTO[]>;
+  getEmployeeLogs(employeeId: string): Promise<LogDTO[]>;
 }

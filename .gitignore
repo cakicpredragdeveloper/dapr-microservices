@@ -80,7 +80,7 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
-*.log
+# *.log
 *.vspscc
 *.vssscc
 .builds
@@ -373,9 +373,11 @@ healthchecksdb
 *.dib
 
 # ICO
-*.ico
+# *.ico
 
 idea/
 .env
 dist/
 build/
+
+.DS_STORE

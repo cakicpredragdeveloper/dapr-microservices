@@ -1,6 +1,7 @@
 import ICheckAuthGateway from "../domain/modules/auth/gateway/ICheckAuthGateway";
 import ISignInGateway from "../domain/modules/auth/gateway/ISignInGateway";
 import ISignOutGateway from "../domain/modules/auth/gateway/ISignOutGateway";
+import IGetEmployeeGateway from "../domain/modules/employee/gateway/IGetEmployeeGateway";
 import IGetEmployeesGateway from "../domain/modules/employee/gateway/IGetEmployeesGateway";
 import IGetLogsGateway from "../domain/modules/logDomain/gateway/IGetLogsGateway";
 import RepositoryFactory from "./RepositoryFactory";
@@ -26,5 +27,9 @@ export default class GatewayFactory {
 
   getGetLogsGateway(): IGetLogsGateway {
     return this.repositoryFactory.getGetLogRepository();
+  }
+
+  getGetEmployeeGateway(): IGetEmployeeGateway {
+    return this.repositoryFactory.getEmployeeGateway();
   }
 }

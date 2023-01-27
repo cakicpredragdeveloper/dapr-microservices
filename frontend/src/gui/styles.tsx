@@ -19,7 +19,7 @@ export const themeMui = createThemeMui(defTheme, {
       main: "#DE4A2C"
     },
     text: {
-      primary: "#000000"
+      primary: "#40454E"
     }
   },
   typography: {

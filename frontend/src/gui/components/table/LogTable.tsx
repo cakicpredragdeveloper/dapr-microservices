@@ -26,7 +26,7 @@ const mapSortingOptions: { [key: string]: string } = {
   EmployeeId: "EmployeeId"
 };
 
-type LogFieldType = "WorkingTime" | "OnDay" | "EntryTimestamp" | "ExitTimestamp" | "EmployeeId";
+export type LogFieldType = "WorkingTime" | "OnDay" | "EntryTimestamp" | "ExitTimestamp" | "EmployeeId";
 
 export const tableCell = (id: string, label: string, width: string, handleRedirect?: (event: any) => void) => (
   <TableCell

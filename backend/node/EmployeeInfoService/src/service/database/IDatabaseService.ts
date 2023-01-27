@@ -15,6 +15,8 @@ export type LogModel = {
 };
 
 export default interface IDatabaseService {
+  getEmployee(employeeId: string): Promise<EmployeeModel>;
   getEmployees(): Promise<EmployeeModel[]>;
+  getEmployeeLogs(employeeId: string): Promise<LogModel[]>;
   getLogs(): Promise<LogModel[]>;
 }

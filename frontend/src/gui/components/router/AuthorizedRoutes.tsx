@@ -1,5 +1,6 @@
 import { Outlet, Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
+import Employee from "../../page/employee/employee";
 import Employees from "../../page/employee/employeeTable";
 import Logs from "../../page/logPage/logTable";
 import NotFound from "../../page/notFound";
@@ -12,7 +13,7 @@ function AuthorizedRoutes() {
       <Route element={<AppBreadcrumbs />}>
         <Route path="employees" element={<Outlet />}>
           <Route index element={<Employees />} />
-          {/* <Route path=":id" element={<Employee />} /> */}
+          <Route path=":employeeId" element={<Employee />} />
         </Route>
         <Route path="logs" element={<Outlet />}>
           <Route index element={<Logs />} />

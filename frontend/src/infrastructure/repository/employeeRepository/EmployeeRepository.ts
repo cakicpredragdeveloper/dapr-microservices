@@ -12,6 +12,17 @@ export class EmployeeRepositoryError extends Error {
 export default class EmployeeRepository implements IEmployeeRepository {
   constructor(private _dataSource: IEmployeeDataSource, private _mapperFactory: IEmployeeMapperFactory) {}
 
+  async getEmployee(employeeId: string): Promise<Employee> {
+    try {
+      const employee = await this._dataSource.getEmployee(employeeId);
+      const employeeMap = this._mapperFactory.getEmployeeMapper().map(employee);
+
+      return employeeMap;
+    } catch (error: any) {
+      throw new EmployeeRepositoryError(`[getEmployees] - ${error.message}`);
+    }
+  }
+
   async getEmployees(): Promise<Employee[]> {
     try {
       const employees = await this._dataSource.getEmployees();

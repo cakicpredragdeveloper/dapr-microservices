@@ -7,5 +7,6 @@ export type EmployeeDTO = {
 };
 
 export default interface IEmployeeDataSource {
+  getEmployee(employeeId: string): Promise<EmployeeDTO>;
   getEmployees(): Promise<EmployeeDTO[]>;
 }
