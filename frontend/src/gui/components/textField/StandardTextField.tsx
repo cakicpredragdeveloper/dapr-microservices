@@ -11,7 +11,7 @@ const StandardTextField = ({ value, error, onChangeInputs }: StandardTextFieldPr
   <TextField
     id="email"
     variant="outlined"
-    label="email"
+    label="username"
     name="email"
     sx={(theme) => ({
       margin: theme.spacing(0.7, 0)
