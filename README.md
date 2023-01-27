@@ -4,7 +4,7 @@
 
 <!-- FOR REACT AND NODE SERVICES  -->
 
-### 1. Docker container initialize
+### 1. Initialize Docker container
 
 Start the database docker container
 
