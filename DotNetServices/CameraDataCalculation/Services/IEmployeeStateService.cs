@@ -6,5 +6,6 @@ namespace CameraDataCalculation.Services
     {
         Task SaveEmployeeStateAsync(EmployeeState employeeState);
         Task<EmployeeState> GetEmployeeStateAsync(string employeeId);
+        Task DeleteEmployeeStateAsync(string employeeId);
     }
 }

@@ -1,8 +1,8 @@
 apiVersion: dapr.io/v1alpha1
 kind: Component
 metadata:
-  name: entrycam
-  namespace: dapr-microservices
+  name: exitcam
+  namespace: dapr-cameradatacalculation
 spec:
   type: bindings.mqtt
   version: v1
@@ -10,7 +10,7 @@ spec:
   - name: url
     value: mqtt://localhost:1883
   - name: topic
-    value: demo-camera-entrycam
+    value: demo-camera-exitcam
   - name: consumerID
     value: "{uuid}"
 scopes:

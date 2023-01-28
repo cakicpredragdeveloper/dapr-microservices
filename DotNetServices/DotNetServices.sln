@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CameraSimulation", "DotNetServices\CameraSimulation.csproj", "{45532E05-95B2-4C4C-AC01-4E5BF075BA74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraDataCalculation", "CameraDataCalculation\CameraDataCalculation.csproj", "{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CameraDataCalculation", "CameraDataCalculation\CameraDataCalculation.csproj", "{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingTimeControl", "WorkingTimeControl\WorkingTimeControl.csproj", "{02DE6BA6-2551-44DB-ACA7-3158E5E5330A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13636EE9-C769-44CE-ADDE-576CD0EBA2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02DE6BA6-2551-44DB-ACA7-3158E5E5330A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02DE6BA6-2551-44DB-ACA7-3158E5E5330A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02DE6BA6-2551-44DB-ACA7-3158E5E5330A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02DE6BA6-2551-44DB-ACA7-3158E5E5330A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

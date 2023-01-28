@@ -6,5 +6,7 @@ namespace CameraDataCalculation.Repositories
     {
         Task SaveEmployeeStateAsync(EmployeeState employeeState);
         Task<EmployeeState> GetEmployeeStateAsync(string employeeId);
+        Task DeleteEmployeeStateAsync(string employeeId);
+        Task DeleteAllEmployeesAsync();
     }
 }

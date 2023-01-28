@@ -7,79 +7,210 @@ using MQTTnet;
 using MQTTnet.Client;
 using CameraSimulation.Events;
 using Newtonsoft.Json;
+using System.IO;
+using CameraSimulation.Models;
+using System.Collections.Generic;
 
 namespace CameraSimulation.BackgroundServices
 {
     public class BackgroundDataSender : IHostedService
     {
+        #region Constants
+
+        const string _ENTRY_CAM_TOPIC = "demo-camera-entrycam";
+        const string _EXIT_CAM_TOPIC = "demo-camera-exitcam";
+
+        #endregion
+
+        #region Private fields
+
         private ILogger<BackgroundDataSender> _logger;
         IMqttClient _client;
+        List<Employee> _employees;
+
+        #endregion
+
+        #region Constructors
 
         public BackgroundDataSender(ILogger<BackgroundDataSender> logger)
         {
             _logger = logger;
         }
 
+        #endregion
+
+        #region Public methods
+
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("CameraSimulation.BackgroundService running.");
-
-            var mqttFactory = new MqttFactory();
-
-            _client = mqttFactory.CreateMqttClient();
-
-            var options = new MqttClientOptionsBuilder()
-                .WithTcpServer("localhost", 1883)
-                .Build();
-
-            await _client.ConnectAsync(options);
-
-            if (_client.IsConnected)
+            try
             {
-                _logger.LogInformation("CameraSimulation.BackgroundService connected to MQTT");
+                _logger.LogInformation("CameraSimulation.BackgroundService.StartAsync: Background service is running.");
 
-                while (true)
+                await InitializeMqttConnectionAsync();
+
+                if (_client.IsConnected)
                 {
-                    var entryCam = new EmployeeRegistered
+                    _logger.LogInformation("CameraSimulation.BackgroundService.StartAsync:  Connected to MQTT");
+
+                    ReadDataFromJsonFile();
+
+                    Random random = new Random();
+                    DateTime baseDate = DateTime.Now;
+                    
+                    while (true)
                     {
-                        EmployeeId = Guid.NewGuid().ToString(),
-                        Timestamp = DateTime.Now,
-                    };
 
-                    var eventJson = JsonConvert.SerializeObject(entryCam);
-                    await PublishMessage(eventJson);
+                        #region Send entryCam events
 
-                    Thread.Sleep(20000);
+                        foreach (var employee in _employees)
+                        {
+                            int entryCamHours = random.Next(8, 12);
+                            int entryCamMinutes = random.Next(0, 60);
+                            int entryCamSeconds = random.Next(0, 60);
+
+                            employee.EntryTimeStamp = new DateTime(baseDate.Year, baseDate.Month, baseDate.Day,
+                                    entryCamHours, entryCamMinutes, entryCamSeconds);
+
+                            var entryCam = new EmployeeRegistered()
+                            {
+                                EmployeeId = employee.EmployeeId,
+                                Timestamp = employee.EntryTimeStamp,
+                            };
+
+                            var messagePayload = JsonConvert.SerializeObject(entryCam);
+                            await PublishMessageAsync(messagePayload, _ENTRY_CAM_TOPIC);
+
+                            Thread.Sleep(5000);
+                        }
+
+                        #endregion
+
+                        #region Send exitCam events
+
+                        foreach (var employee in _employees)
+                        {
+                            int exitCamHours = employee.EntryTimeStamp.Hour + random.Next(7, 9);
+                            int exitCamMinutes = random.Next(0, 60);
+                            int exitCamSeconds = random.Next(0, 60);
+
+                            var exitCam = new EmployeeRegistered()
+                            {
+                                EmployeeId = employee.EmployeeId,
+                                Timestamp = new DateTime(baseDate.Year, baseDate.Month, baseDate.Day,
+                                    exitCamHours, exitCamMinutes, exitCamSeconds),
+                            };
+
+                            var messagePayload = JsonConvert.SerializeObject(exitCam);
+                            await PublishMessageAsync(messagePayload, _EXIT_CAM_TOPIC);
+
+                            Thread.Sleep(5000);
+                        }
+
+                        #endregion
+                    
+                        Thread.Sleep(65000);
+
+                        baseDate = baseDate.AddDays(1);
+                    }
+                }
+                else
+                {
+                    _logger.LogInformation("CameraSimulation.BackgroundService.StartAsync: Not connected to MQTT");
                 }
             }
-            else
+            catch(Exception ex)
             {
-                _logger.LogInformation("CameraSimulation.BackgroundService not connected to MQTT");
+                _logger.LogError(ex.Message);
             }
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("CameraSimulation.BackgroundService is stopping.");
+            _logger.LogInformation("CameraSimulation.BackgroundService.StopAsync: Background service is stopping.");
             _client?.Dispose();
         }
 
-        private async Task PublishMessage(string messagePayload)
-        {
-            var message = new MqttApplicationMessageBuilder()
-                .WithTopic("demo-camera-simulation")
-                .WithPayload(messagePayload)
-                .Build();
+        #endregion
 
-            if (_client.IsConnected)
+        #region Private methods
+
+        private async Task InitializeMqttConnectionAsync()
+        {
+            try
             {
-                await _client.PublishAsync(message);
-                _logger.LogInformation("CameraSimulation.BackgroundService Message: {0} is sent!", messagePayload);
+                _logger.LogInformation("CameraSimulation.BackgroundService.InitializeMqttConnectionAsync: " +
+                    "Initializing Mqtt connection.");
+
+                var mqttFactory = new MqttFactory();
+
+                _client = mqttFactory.CreateMqttClient();
+
+                var options = new MqttClientOptionsBuilder()
+                    .WithTcpServer("localhost", 1883)
+                    .Build();
+
+                await _client.ConnectAsync(options);
             }
-            else
+            catch(Exception)
             {
-                _logger.LogInformation("CameraSimulation.BackgroundService MQTT client is not connected, Message: {0} is not sent!", messagePayload);
+                throw;
             }
         }
+
+        private void ReadDataFromJsonFile()
+        {
+            try
+            {
+                _logger.LogInformation("CameraSimulation.BackgroundService.ReadDataFromJsonFile: " +
+                    "Reading data from json file.");
+
+                string text = File.ReadAllText(@"./Employees.json");
+                var employees1 = JsonConvert.DeserializeObject<List<Employee>>(text);
+                _employees = new List<Employee>();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    _employees.Add(employees1[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private async Task PublishMessageAsync(string messagePayload, string topic)
+        {
+            try
+            {
+                _logger.LogInformation("CameraSimulation.BackgroundService.PublishMessageAsync: " +
+                    "Publishing message to topic");
+
+                var message = new MqttApplicationMessageBuilder()
+                    .WithTopic(topic)
+                    .WithPayload(messagePayload)
+                    .Build();
+
+                if (_client.IsConnected)
+                {
+                    await _client.PublishAsync(message);
+
+                    _logger.LogInformation("CameraSimulation.BackgroundService.PublishMessageAsync: " +
+                        "Message: {0} is sent!", messagePayload);
+                }
+                else
+                {
+                    _logger.LogInformation("CameraSimulation.BackgroundService.PublishMessageAsync: " +
+                        "MQTT client is not connected, Message: {0} is not sent!", messagePayload);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+        #endregion
     }
 }

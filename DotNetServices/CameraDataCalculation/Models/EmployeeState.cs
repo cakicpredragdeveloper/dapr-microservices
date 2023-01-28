@@ -2,15 +2,13 @@
 {
     public class EmployeeState
     {
-        public string EmployeeId { get; init; }
-        public DateTime EntryTimestamp { get; init; }
-        public DateTime? ExitTimestamp { get; init; }
+        public string EmployeeId { get; set; }
+        public DateTime EntryTimestamp { get; set; }
 
-        public EmployeeState(string employeeId, DateTime entryTimestamp, DateTime? exitTimestamp = null)
+        public EmployeeState(string employeeId, DateTime entryTimestamp)
         {
             EmployeeId = employeeId;
             EntryTimestamp = entryTimestamp;
-            ExitTimestamp = exitTimestamp;
         }
     }
 }
