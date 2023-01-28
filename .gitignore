@@ -80,7 +80,7 @@ StyleCopReport.xml
 *.tmp
 *.tmp_proj
 *_wpftmp.csproj
-*.log
+# *.log
 *.vspscc
 *.vssscc
 .builds
@@ -359,10 +359,10 @@ healthchecksdb
 *.gif
 
 # Portable Network Graphics
-*.png
+# *.png
 
 # Scalable Vector Graphics
-*.svg
+# *.svg
 *.svgz
 
 # Portable Document Format
@@ -373,4 +373,11 @@ healthchecksdb
 *.dib
 
 # ICO
-*.ico
+# *.ico
+
+idea/
+.env
+dist/
+build/
+
+.DS_STORE
