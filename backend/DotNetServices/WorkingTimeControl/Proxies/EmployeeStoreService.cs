@@ -15,7 +15,7 @@ namespace WorkingTimeControl.Proxies
         {  
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("v1/insert", reports);
+                var response = await _httpClient.PostAsJsonAsync("v1/insert", reports, new System.Text.Json.JsonSerializerOptions() { });
                 return response;
             }
             catch(Exception)

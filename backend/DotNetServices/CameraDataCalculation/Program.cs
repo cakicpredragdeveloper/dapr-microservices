@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSingleton<IWorkingTimeCalculator, WorkingTimeCalculator>();
 builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
-builder.Services.AddSingleton<IEmployeeStateRepository, EmployeeStateRepository>();
+builder.Services.AddSingleton<IEmployeeStateRepository, EmployeeStateRepository>(); 
 builder.Services.AddSingleton<IEmployeeStateService, EmployeeStateService>();
 
 var daprHttpPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "9080";
