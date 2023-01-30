@@ -25,7 +25,6 @@ export const mapSortingOptions: { [key: string]: string } = {
   Email: "Email",
   JobTitle: "JobTitle",
   WorkingTime: "WorkingTime",
-  OnDay: "OnDay",
   EntryTimestamp: "EntryTimestamp",
   ExitTimestamp: "ExitTimestamp"
 };

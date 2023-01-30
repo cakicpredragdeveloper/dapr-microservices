@@ -9,7 +9,6 @@ export class LogError extends Error {
 
 interface LogProps {
   WorkingTime: NotEmptyString;
-  OnDay: NotEmptyString;
   EntryTimestamp: NotEmptyString;
   ExitTimestamp: NotEmptyString;
   EmployeeId: NotEmptyString;
@@ -22,10 +21,6 @@ export default class Log extends ValueObject<LogProps> {
 
   get WorkingTime(): NotEmptyString {
     return this.props.WorkingTime;
-  }
-
-  get OnDay(): NotEmptyString {
-    return this.props.OnDay;
   }
 
   get EntryTimestamp(): NotEmptyString {

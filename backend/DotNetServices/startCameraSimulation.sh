@@ -1,0 +1,1 @@
+cd dotnetservices && dotnet run

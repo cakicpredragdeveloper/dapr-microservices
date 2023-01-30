@@ -10,7 +10,6 @@ export default class LogPresentation implements IMapper<Log, LogViewModel> {
   map(input: Log): LogViewModel {
     return {
       WorkingTime: input.WorkingTime.value,
-      OnDay: input.OnDay.value,
       EntryTimestamp: input.EntryTimestamp.value,
       ExitTimestamp: input.ExitTimestamp.value,
       EmployeeId: input.EmployeeId.value

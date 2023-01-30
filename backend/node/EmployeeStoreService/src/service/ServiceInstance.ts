@@ -13,26 +13,21 @@ export default class ServiceInstance implements Service {
 
   async insertWorkingHours(employees: LogModel[]): Promise<string> {
     try {
-      const date = new Date();
-      date.setMilliseconds(0);
-      date.setSeconds(0);
-      date.setMinutes(0);
-      date.setHours(1);
-
       await this.createTableIfNotExist();
 
       let query = ``;
       employees.forEach((employee, ind) => {
         if (ind > 0) query += ",";
 
-        query += `('${employee.WorkingTime}', '${date.toISOString()}', '${new Date(
-          employee.EntryTimestamp
-        ).toISOString()}', '${new Date(employee.ExitTimestamp).toISOString()}', '${employee.EmployeeId}')`;
+        query += `('${employee.WorkingTime}', '${new Date(employee.EntryTimestamp).toISOString()}', '${new Date(
+          employee.ExitTimestamp
+        ).toISOString()}', '${employee.EmployeeId}')`;
       });
 
-      const sql = `INSERT INTO ${this.table} (WorkingTime, OnDay, EntryTimestamp, ExitTimestamp, EmployeeId) values ${query};`;
+      const sqlCmd = `INSERT INTO ${this.table} (WorkingTime, EntryTimestamp, ExitTimestamp, EmployeeId) values ${query};`;
+      const payload = `{"sql": "${sqlCmd}"} `;
 
-      await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(this.generateCommand(sql)));
+      await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(payload));
 
       return "OK";
     } catch (err: any) {
@@ -41,15 +36,9 @@ export default class ServiceInstance implements Service {
   }
 
   private async createTableIfNotExist() {
-    const sql = `
-      CREATE TABLE IF NOT EXISTS ${this.table} 
-      ( Id SERIAL NOT NULL, WorkingTime varchar(255), OnDay date, EntryTimestamp date, ExitTimestamp date, EmployeeId varchar(255) NOT NULL, 
-      PRIMARY KEY (Id), FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ); `;
+    const sqlTableCmd = `CREATE TABLE IF NOT EXISTS ${this.table} ( Id SERIAL NOT NULL, WorkingTime varchar(255), EntryTimestamp date, ExitTimestamp date, EmployeeId varchar(255) NOT NULL, PRIMARY KEY (Id), FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId) ); `;
+    const tableSQL = `{"sql": "${sqlTableCmd}"} `;
 
-    await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(this.generateCommand(sql)));
-  }
-
-  private generateCommand(command: string): string {
-    return `{"sql": "${command}"} `;
+    await this.daprClient.binding.send(this.store, "exec", "", JSON.parse(tableSQL));
   }
 }

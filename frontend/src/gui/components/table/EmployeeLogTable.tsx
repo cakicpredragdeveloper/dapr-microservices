@@ -74,10 +74,9 @@ export default function EmployeeLogTable() {
 
   const row = (log: LogViewModel, ind?: number) => (
     <TableRow key={`${log.EmployeeId}-${ind}`} id={`${log.EmployeeId}`}>
-      {tableCell(log.EmployeeId, log.WorkingTime, "25%")}
-      {tableCell(log.EmployeeId, log.OnDay, "25%")}
-      {tableCell(log.EmployeeId, log.EntryTimestamp, "25%")}
-      {tableCell(log.EmployeeId, log.ExitTimestamp, "25%")}
+      {tableCell(log.EmployeeId, log.WorkingTime, "33%")}
+      {tableCell(log.EmployeeId, log.EntryTimestamp, "33%")}
+      {tableCell(log.EmployeeId, log.ExitTimestamp, "33%")}
     </TableRow>
   );
 
@@ -97,7 +96,7 @@ export default function EmployeeLogTable() {
     const currType = searchParams.get("sortType");
     const currField = searchParams.get("sortField");
 
-    if (option === "WorkingTime" || option === "OnDay" || option === "EntryTimestamp" || option === "ExitTimestamp") {
+    if (option === "WorkingTime" || option === "EntryTimestamp" || option === "ExitTimestamp") {
       const sortType =
         option !== currField ? "asc" : currType === "desc" ? "none" : currType === "asc" ? "desc" : "asc";
 
@@ -117,11 +116,7 @@ export default function EmployeeLogTable() {
     filteredData.length > 0 ? (
       <TableContainer component={Card} sx={{ marginBottom: 2, blog: "1px solid #DFE0EB", blogRadius: "8px" }}>
         <Table aria-label="logs-table" size="small">
-          <TableHeader
-            cells={["WorkingTime", "OnDay", "EntryTimestamp", "ExitTimestamp"]}
-            setSort={sorting}
-            sort={sort}
-          />
+          <TableHeader cells={["WorkingTime", "EntryTimestamp", "ExitTimestamp"]} setSort={sorting} sort={sort} />
           <TableBody>{displayData.map((log, ind) => row(log, ind))}</TableBody>
           <TableFooter>
             <TableRow>

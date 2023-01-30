@@ -8,9 +8,11 @@ export default class ServiceController {
     try {
       const values = req.body;
 
-      res.json({
-        message: await this.service.insertWorkingHours(values)
-      });
+      const message = await this.service.insertWorkingHours(values);
+      if (message === "OK")
+        res.json({
+          message
+        });
     } catch (error: any) {
       throw error;
     }

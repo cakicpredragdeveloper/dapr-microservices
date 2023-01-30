@@ -20,13 +20,12 @@ import TableCell from "@mui/material/TableCell/TableCell";
 const mapSortingOptions: { [key: string]: string } = {
   none: "none",
   WorkingTime: "WorkingTime",
-  OnDay: "OnDay",
   EntryTimestamp: "EntryTimestamp",
   ExitTimestamp: "ExitTimestamp",
   EmployeeId: "EmployeeId"
 };
 
-export type LogFieldType = "WorkingTime" | "OnDay" | "EntryTimestamp" | "ExitTimestamp" | "EmployeeId";
+export type LogFieldType = "WorkingTime" | "EntryTimestamp" | "ExitTimestamp" | "EmployeeId";
 
 export const tableCell = (id: string, label: string, width: string, handleRedirect?: (event: any) => void) => (
   <TableCell
@@ -96,7 +95,6 @@ export default function LogsTable() {
       searchList = logList.filter(
         (log) =>
           searchFilter(log.WorkingTime, search) ||
-          searchFilter(log.OnDay, search) ||
           searchFilter(log.EntryTimestamp, search) ||
           searchFilter(log.ExitTimestamp, search) ||
           searchFilter(log.EmployeeId, search)
@@ -141,11 +139,10 @@ export default function LogsTable() {
 
   const row = (log: LogViewModel, ind?: number) => (
     <TableRow key={`${log.EmployeeId}-${ind}`} id={`${log.EmployeeId}`}>
-      {tableCell(log.EmployeeId, log.WorkingTime, "20%")}
-      {tableCell(log.EmployeeId, log.OnDay, "20%")}
-      {tableCell(log.EmployeeId, log.EntryTimestamp, "20%")}
-      {tableCell(log.EmployeeId, log.ExitTimestamp, "20%")}
-      {tableCell(log.EmployeeId, log.EmployeeId, "20%")}
+      {tableCell(log.EmployeeId, log.WorkingTime, "25%")}
+      {tableCell(log.EmployeeId, log.EntryTimestamp, "25%")}
+      {tableCell(log.EmployeeId, log.ExitTimestamp, "25%")}
+      {tableCell(log.EmployeeId, log.EmployeeId, "25%")}
     </TableRow>
   );
 
@@ -167,7 +164,6 @@ export default function LogsTable() {
 
     if (
       option === "WorkingTime" ||
-      option === "OnDay" ||
       option === "EntryTimestamp" ||
       option === "ExitTimestamp" ||
       option === "EmployeeId"
@@ -191,7 +187,7 @@ export default function LogsTable() {
     <TableContainer component={Card} sx={{ marginBottom: 2, blog: "1px solid #DFE0EB", blogRadius: "8px" }}>
       <Table aria-label="logs-table" size="small">
         <TableHeader
-          cells={["WorkingTime", "OnDay", "EntryTimestamp", "ExitTimestamp", "EmployeeId"]}
+          cells={["WorkingTime", "EntryTimestamp", "ExitTimestamp", "EmployeeId"]}
           setSort={sorting}
           sort={sort}
         />

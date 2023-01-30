@@ -10,11 +10,10 @@ export class LogMapperError extends Error {
 }
 
 export default class LogMapper implements IMapper<LogDTO, Log> {
-  map({ WorkingTime, OnDay, EntryTimestamp, ExitTimestamp, EmployeeId }: LogDTO): Log {
+  map({ WorkingTime, EntryTimestamp, ExitTimestamp, EmployeeId }: LogDTO): Log {
     try {
       return new Log({
         WorkingTime: NotEmptyString.create(WorkingTime),
-        OnDay: NotEmptyString.create(OnDay),
         EntryTimestamp: NotEmptyString.create(EntryTimestamp),
         ExitTimestamp: NotEmptyString.create(ExitTimestamp),
         EmployeeId: NotEmptyString.create(EmployeeId)

@@ -5,7 +5,7 @@ import IDatabaseService, { EmployeeModel, LogModel } from "./IDatabaseService";
 
 export default class DatabaseService implements IDatabaseService {
   private readonly daprClient: DaprClient;
-  private readonly store = "sqldb";
+  private readonly store = "sqldb-get";
   private readonly employeesTable = "employees";
   private readonly logsTable = "logs";
 
@@ -86,10 +86,9 @@ export default class DatabaseService implements IDatabaseService {
   private mapLog(data: any): LogModel {
     return {
       WorkingTime: data[1],
-      OnDay: new Date(data[2]).toLocaleDateString(),
-      EntryTimestamp: new Date(data[3]).toLocaleString(),
-      ExitTimestamp: new Date(data[4]).toLocaleString(),
-      EmployeeId: data[5]
+      EntryTimestamp: new Date(data[2]).toLocaleString(),
+      ExitTimestamp: new Date(data[3]).toLocaleString(),
+      EmployeeId: data[4]
     };
   }
 }

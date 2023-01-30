@@ -25,7 +25,7 @@ export default class Config extends BaseConfig {
       },
       dapr: {
         host: this.convertToString(this.generateDaprKey("HOST"), env[this.generateDaprKey("HOST")]),
-        port: this.convertToString(this.generateDaprKey("PORT"), env[this.generateDaprKey("PORT")])
+        port: this.convertToString(this.generateDaprKey("INFO_PORT"), env[this.generateDaprKey("INFO_PORT")])
       }
     };
   }

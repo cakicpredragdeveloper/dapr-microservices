@@ -25,6 +25,7 @@ export const GetLogs = (): Command => async (dispatch) => {
     dispatch(logsLoaded({ logs }));
     dispatch(requestFinished());
   } catch (e: any) {
+    console.log(e);
     const errorMessage = ErrorHandler.errored(e, ErrorCodes.EMPLOYEES_ERROR);
     dispatch(errorHappened(errorMessage));
   }
