@@ -1,5 +1,3 @@
-import { Response } from "express";
-
 export type LogModel = {
   WorkingTime: string;
   EntryTimestamp: string;
@@ -8,5 +6,5 @@ export type LogModel = {
 };
 
 export default interface Service {
-  insertWorkingHours(employees: LogModel[], res: Response): Promise<string>;
+  insertWorkingHours(employees: LogModel[]): Promise<string>;
 }
