@@ -6,7 +6,7 @@ using WorkingTimeControl.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var daprHttpPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "3600";
+var daprHttpPort = Environment.GetEnvironmentVariable("DAPR_HTTP_PORT") ?? "9080";
 var daprGrpcPort = Environment.GetEnvironmentVariable("DAPR_GRPC_PORT") ?? "60000";
 
 builder.Services.AddDaprClient(builder => builder

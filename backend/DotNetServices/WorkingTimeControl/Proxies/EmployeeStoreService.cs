@@ -11,13 +11,14 @@ namespace WorkingTimeControl.Proxies
             _httpClient = httpClient;
         }
 
-        public async Task SendDailyReports(List<InsufficientWorkingHours> reports)
-        {
+        public async Task<HttpResponseMessage> SendDailyReports(List<InsufficientWorkingHours> reports)
+        {  
             try
             {
-                await _httpClient.PostAsJsonAsync<List<InsufficientWorkingHours>>("v1/insert", reports);
+                var response = await _httpClient.PostAsJsonAsync("v1/insert", reports);
+                return response;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }

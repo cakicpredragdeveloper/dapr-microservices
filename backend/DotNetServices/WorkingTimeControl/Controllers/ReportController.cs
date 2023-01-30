@@ -40,8 +40,17 @@ namespace WorkingTimeControl.Controllers
                     var reports = await _reportService.GetReportsAsync();
                     _logger.LogInformation($"Number of retrieved reports: {reports.Count}");
 
-                    await _eployeeStoreService.SendDailyReports(reports);
+                    var response = await _eployeeStoreService.SendDailyReports(reports);
                     _logger.LogInformation($"Reports sent to EMPLOYEESTORESERVICE: {JsonConvert.SerializeObject(reports)}");
+                    
+                    if (response != null)
+                    {
+                        _logger.LogInformation($"Http Status Code:  {response?.StatusCode}, Content: {await response?.Content.ReadAsStringAsync()}");
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"HttpResponseMesssage is null!");
+                    }
 
                     await _reportService.DeleteReportsAsync();
                     _logger.LogInformation("Reports deleted from reportstore");
