@@ -19,7 +19,7 @@ namespace CameraDataCalculation.RabbitMq
                 await _daprClient.PublishEventAsync<InsufficientWorkingHours>("pubsub", "insufficient-working-hours", workingHoursEvent);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
